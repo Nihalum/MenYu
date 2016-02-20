@@ -81,7 +81,6 @@ public class ScrollListActivity extends AppCompatActivity {
             list.addView(listBox);
             //Need to add buttons on side
         }
-
     }
 
 }

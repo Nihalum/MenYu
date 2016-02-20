@@ -69,7 +69,7 @@ public class ScrollListActivity extends AppCompatActivity {
 
         TextView title = new TextView(this);
         title.setText(itemTitles[i]);
-        title.setTextSize(20);
+        title.setTextAppearance(this, android.R.style.TextAppearance_Small); //this is API23 only
         title.setTextColor(Color.BLACK);
         title.setPadding(8, 8, 8, 4);
         title.setId(i+1); //setID has to have positive Int as parameter

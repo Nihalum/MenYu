@@ -1,6 +1,7 @@
 package com.team15.menyu;
 
 import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -83,6 +84,16 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+
+
+            ProgressDialog dialog = new ProgressDialog(this); // this = YourActivity
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("Loading. Please wait...");
+            dialog.setIndeterminate(true);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
+
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

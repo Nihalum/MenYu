@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -44,10 +45,10 @@ public class ScrollListActivity extends AppCompatActivity {
     float fpixels = metrics.density * dp;
     int pixels = (int) (metrics.density * dp + 0.5f);
 
-    LinearLayout list = (LinearLayout) findViewById(R.id.genericWindow);
-    int listItems = 3; //HOW MANY PLACES
-    String[] itemTitles = {"Ayy lmao", "Dank Memes", "Jet Fuel with a side of Steel Beams"}; //DAVID convert from your PlaceLikelihood
-    String[] itemReviews = {"/%d reviews", "'d101 reviews", "f240 reviews"}; //DAVID same
+    LinearLayout list = (LinearLayout) findViewById(R.id.scrollingListTEMP);
+    int listItems = 6; //HOW MANY PLACES
+    String[] itemTitles = {"Ayy lmao", "Dank Memes", "Jet Fuel with a side of Steel Beams", "4", "5", "6"}; //DAVID convert from your PlaceLikelihood
+    String[] itemReviews = {"/%d reviews", "'d101 reviews", "f240 reviews", "444", "555", "666"}; //DAVID same
 
     for(int i = 0; i < listItems; i++) {
         RelativeLayout listBox = new RelativeLayout(this);
@@ -64,7 +65,7 @@ public class ScrollListActivity extends AppCompatActivity {
         lpTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 
         // Setting the RelativeLayout as our content view
-        //setContentView(listBox, rlp);
+        //setContentView(listBox, rlp); //IDK WHAT THIS DOES BESIDES CAUSE APP TO CRASH
 
         TextView title = new TextView(this);
         title.setText(itemTitles[i]);
@@ -78,7 +79,8 @@ public class ScrollListActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams lpReviews = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT);
-        lpReviews.addRule(RelativeLayout.BELOW, title.getId());
+        lpReviews.addRule(RelativeLayout.BELOW, i+1); //apparently this is better
+                                                      //than title.getId()
 
         TextView reviews = new TextView(this);
         reviews.setLayoutParams(lpReviews);

@@ -1,5 +1,5 @@
 package com.team15.menyu;
-// bench
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,10 +23,14 @@ import android.widget.ListView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class FoodListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
@@ -35,12 +39,7 @@ public class FoodListActivity extends ListActivity {
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
         restaurant.setText(restaurantTitle_I);
 
-        FoodItem[] values = new FoodItem[6];
-        for(int i = 0; i < 6; i++)  //ROHIT PUT IN THE ACTUAL SQL VALUES
-        {
-            values[i] = new FoodItem();
-//            values[i] = new FoodItem();
-        }
+        ArrayList<Food> values = db.getFood(restaurantTitle_I);
         MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);
         setListAdapter(adapter);
 
@@ -52,9 +51,6 @@ public class FoodListActivity extends ListActivity {
                         .setAction("Action", null).show();
             }
         });
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
     }
 }

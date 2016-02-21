@@ -123,10 +123,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void openTest(View view) {
-        Intent intent = new Intent(this, ScrollListActivity.class);
-        startActivity(intent);
-    }
     /**
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {

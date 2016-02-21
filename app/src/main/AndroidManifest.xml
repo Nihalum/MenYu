@@ -14,10 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Menyu"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -27,13 +23,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScrollListActivity"
-            android:label="@string/title_activity_scroll_list"
-            android:parentActivityName=".MainActivity"
+            android:name=".FoodListActivity"
+            android:label="@string/title_activity_food_list"
+            android:parentActivityName=".ScrollListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.team15.menyu.MainActivity" />
+                android:value="com.team15.menyu.LocationActivity" />
         </activity>
         <activity
             android:name=".LocationActivity"

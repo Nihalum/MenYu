@@ -21,18 +21,20 @@ public class LocationActivity extends AppCompatActivity{
     private GoogleApiClient mGoogleApiClient;
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final String LOG_TAG = "PlacesAPIActivity";
-    static List<String> possible_places = new ArrayList<String>();
-    static int possible_places_count = 0;
-
+    private static List<String> possible_places = new ArrayList<String>();
+    private static int possible_places_count = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        possible_places_count = getIntent().getExtras().getInt("PLACES_COUNT");
+        possible_places = getIntent().getStringArrayListExtra("PLACES");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -53,10 +55,10 @@ public class LocationActivity extends AppCompatActivity{
 
         LinearLayout list = (LinearLayout) findViewById(R.id.scrollingListTEMP);
 
-        int listItems = Menyu.possible_places_count; //CHANGED
+        int listItems = possible_places_count; //CHANGED
 
         String[] placesTitles = new String[listItems];//CHANGED
-        placesTitles = Menyu.possible_places.toArray(placesTitles);//CHANGED
+        placesTitles = possible_places.toArray(placesTitles);//CHANGED
         String[] itemReviews = {"/%d reviews", "'d101 reviews", "f240 reviews", "444", "555", "666"}; //DAVID same
 
         for(int i = 0; i < listItems; i++) {

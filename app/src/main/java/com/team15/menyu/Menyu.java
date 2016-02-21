@@ -1,8 +1,12 @@
 package com.team15.menyu;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -23,8 +27,9 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
     private GoogleApiClient mGoogleApiClient;
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final String LOG_TAG = "PlacesAPIActivity";
-    public static List<String> possible_places = new ArrayList<String>();
-    public static int possible_places_count = 0;
+    private static List<String> possible_places = new ArrayList<String>();
+    private static int possible_places_count = 0;
+    private static final int LOCATION_PERMISSION = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +40,93 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
                 .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
                 .build();
 
-        getCurrentPlaces();
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                next();
-            }
-        }, 2000);
-
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION);
+        } else {
+            new PostTask().execute("DAMN SON ASYNC TASK HERE");
+        }
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    new PostTask().execute("DAMN SON ASYNC TASK HERE");
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    finish();
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
     private void next() {
-        Intent intent = new Intent(this, ScrollListActivity.class);
+
+        Intent intent = new Intent(this, LocationActivity.class);
+        intent.putExtra("PLACES_COUNT", possible_places_count);
+        intent.putStringArrayListExtra("PLACES", (ArrayList<String>) possible_places);
         startActivity(intent);
         finish();
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+    // The definition of our task class
+    private class PostTask extends AsyncTask<String, Integer, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            String url=params[0];
+            getCurrentPlaces();
+
+            while(possible_places_count <= 1) {
+                try {
+                    Thread.sleep(50);
+                    //Log.v(LOG_TAG, "waiting");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return "Done";
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            Log.i(LOG_TAG, String.format("Places found:'%d'", possible_places_count));
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            next();
+        }
+    }
+
+        @Override
+        public void onConnectionFailed(ConnectionResult connectionResult) {
+            Log.e(LOG_TAG, "Google Places API connection failed with error code: "
                 + connectionResult.getErrorCode());
 
         Toast.makeText(this,
@@ -85,5 +157,6 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
             }
 
         });
+
     }
 }

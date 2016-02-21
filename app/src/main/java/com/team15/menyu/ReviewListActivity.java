@@ -33,24 +33,25 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ReviewListActivity extends ListActivity {
+    DatabaseHelper db = new DatabaseHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        final DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
 
         Intent intent = getIntent();
-        final String restaurantTitle_I = intent.getStringExtra("FOODNAME");
-//        String restaurantTitle_I = "ALLAHU ACKBAR";
+        final String restaurantTitle_I = intent.getStringExtra("RESTAURANT");
+        final String foodTitle_I = intent.getStringExtra("FOODNAME");
+
         TextView restaurant = (TextView) findViewById(R.id.foodName);
-        restaurant.setText(restaurantTitle_I);
+        restaurant.setText(foodTitle_I);
 
-        ArrayList<Review> values = new ArrayList<Review>();
-        Review temp = new Review();
-        values.add(temp);
+//        ArrayList<Review> values = new ArrayList<Review>();
+//        Review temp = new Review();
+//        values.add(temp);
 
-//        ArrayList<Food> values = db.getFood(restaurantTitle_I);
+        ArrayList<Review> values = db.getReview(restaurantTitle_I, foodTitle_I);
         ReviewOptionArrayAdapter adapter = new ReviewOptionArrayAdapter(this, values);
         setListAdapter(adapter);
 
@@ -78,10 +79,9 @@ public class ReviewListActivity extends ListActivity {
                     upVote.setBackgroundColor(Color.rgb(22, 160, 133));//green color
                     upVote.setEnabled(false);
                     downVote.setEnabled(false);
-                    //db.updateVotes(restaurantTitle_I, foodTitle_I, true, false);
+                    db.updateVotes(restaurantTitle_I, foodTitle_I, true, false);
                 } else {
                     upVote.setBackgroundColor(Color.LTGRAY);
-                    //helpful.setTextColor(Color.DKGRAY);
                 }
             }
         });
@@ -93,10 +93,9 @@ public class ReviewListActivity extends ListActivity {
                     downVote.setBackgroundColor(Color.rgb(22, 160, 133));//green color
                     upVote.setEnabled(false);
                     downVote.setEnabled(false);
-                    //db.updateVotes(restaurantTitle_I, foodTitle_I, false, true);
+                    db.updateVotes(restaurantTitle_I, foodTitle_I, false, true);
                 } else {
                     downVote.setBackgroundColor(Color.LTGRAY);
-                    //helpful.setTextColor(Color.DKGRAY);
                 }
             }
         });
@@ -159,6 +158,7 @@ public class ReviewListActivity extends ListActivity {
                 String foodTitle_I = intent.getStringExtra("FOODNAME");
                 String m_Text = input.getText().toString();
                 Review newbie = new Review(restaurantTitle_I, foodTitle_I, m_Text, userEmail_I);
+                db.addReview(newbie);
 
                 finish();
                 startActivity(getIntent());

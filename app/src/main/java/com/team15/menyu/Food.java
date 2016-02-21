@@ -5,7 +5,7 @@ package com.team15.menyu;
  */
 public class Food {
     int id, upvotes, downvotes, noOfReviews;
-    String resName,food;
+    String resName, food;
 
     public Food() {
         this.upvotes = 0;
@@ -19,6 +19,13 @@ public class Food {
         this.downvotes = downvotes;
         this.noOfReviews = noOfReviews;
         this.food = food;
+    }
+    public Food(int upvotes, int downvotes, int noOfReviews, String food, String Restaur) {
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
+        this.noOfReviews = noOfReviews;
+        this.food = food;
+        this.resName = Restaur;
     }
     public void setId(int id) {
         this.id = id;

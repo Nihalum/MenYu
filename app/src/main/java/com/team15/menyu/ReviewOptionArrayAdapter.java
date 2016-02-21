@@ -39,11 +39,11 @@ public class ReviewOptionArrayAdapter extends ArrayAdapter<Review> {
         TextView reviewTitle = (TextView) tempView.findViewById(R.id.reviewTitle);
         TextView reviewPreview = (TextView) tempView.findViewById(R.id.reviewPreview);
         TextView helpfulCounter = (TextView) tempView.findViewById(R.id.helpfulCounter);
-        reviewTitle.setText(values.get(position).author + " says...");
-        reviewPreview.setText(values.get(position).reviewText);
-        helpfulCounter.setText(Integer.toString(values.get(position).helpful));
+        reviewTitle.setText(values.get(position).getAuthor() + " says...");
+        reviewPreview.setText(values.get(position).getReview());
+        helpfulCounter.setText(Integer.toString(values.get(position).getHelpful()));
 
-        final String passthru = values.get(position).reviewText;
+        final String passthru = values.get(position).getReview();
         tempView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,7 +86,6 @@ public class ReviewOptionArrayAdapter extends ArrayAdapter<Review> {
         helpful.setBackgroundColor(Color.LTGRAY);
         helpful.setChecked(false);
         helpful.setTextColor(Color.BLACK);//green color
-
 
         LinearLayout.LayoutParams tog = new LinearLayout.LayoutParams(togPix, togHPix);
         tog.setMargins(sideMargin*10, topMargin, sideMargin, 0);

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class FoodListActivity extends ListActivity {
 
-    private String foodName = "";
+    DatabaseHelper db = new DatabaseHelper(this);
 
     private void dialogText(){
 
@@ -76,8 +76,11 @@ public class FoodListActivity extends ListActivity {
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                foodName = input.getText().toString();
-                //ADD FOOD ITEM (foodName) + RESTAURANT NAME (restaurantTitle_I) TO DB
+                String foodName = input.getText().toString();
+                String restaurantTitle_I = getIntent().getStringExtra("RESTAURANT");
+
+                Food temp = new Food(0, 0, 0, foodName, restaurantTitle_I);
+                db.addFood(temp);
 
                 finish();
                 startActivity(getIntent());
@@ -95,7 +98,6 @@ public class FoodListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
@@ -105,14 +107,17 @@ public class FoodListActivity extends ListActivity {
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
         restaurant.setText(restaurantTitle_I);
 
-        ArrayList<FoodItem> values = new ArrayList<FoodItem>();
-        FoodItem temp = new FoodItem();
-        values.add(temp);
+//        ArrayList<FoodItem> values = new ArrayList<FoodItem>();
+//        FoodItem temp = new FoodItem();
+//        values.add(temp);
 
-//        ArrayList<Food> values = db.getFood(restaurantTitle_I);
-        MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values,
-                restaurantTitle_I, userEmail_I);
-        setListAdapter(adapter);
+        ArrayList<Food> values = db.getFood(restaurantTitle_I);
+
+        if(values.size() > 0) {
+            MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values,
+                    restaurantTitle_I, userEmail_I);
+            setListAdapter(adapter);
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +126,7 @@ public class FoodListActivity extends ListActivity {
                 dialogText();
             }
         });
+
 
     }
 }

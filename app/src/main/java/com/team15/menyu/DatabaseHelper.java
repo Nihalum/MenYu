@@ -12,9 +12,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by RohitRamesh on 2/6/2016.
- */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
@@ -86,8 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db = this.getReadableDatabase();
         String query = "SELECT food, upvotes, downvotes, noOfReviews FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "'";
         Cursor c = db.rawQuery(query, null);
-        Log.d("lol", c.toString());
-        if (c == null) {
+//        Log.d("lol", c.toString());
+        if (c.getCount() == 0) {
             return f;
         }
         else {
@@ -111,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT upvotes, downvotes, noOfReviews, _id FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
-        if (c == null) {
+        if (c.getCount() == 0) {
             return;
         }
         else {
@@ -120,7 +117,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 upvotes = c.getInt(0);
                 downvotes = c.getInt(1);
                 id = c.getString(2);
-            } while (c.moveToNext());
             if(upvote == true) {
                 upvotes = upvotes + 1;
             }
@@ -133,6 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             val.put("downvotes", downvotes);
             db.update(TABLE_FOOD, val, "_id="+id, null);
             db.close();
+            } while (c.moveToNext());
         }
     }
 
@@ -156,17 +153,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         val.put(helpful, r.getHelpful());
         val.put(author, r.getAuthor());
         val.put(reviewText, r.getReview());
-        db.insert(TABLE_FOOD, null, val);
+        db.insert(TABLE_REVIEW, null, val);
         db.close();
     }
 
     public ArrayList<Review> getReview(String restaurant, String food) {
         ArrayList<Review> f = new ArrayList<Review>();
         db = this.getReadableDatabase();
-        String query = "SELECT helpful, reviewText, author FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
+        String query = "SELECT helpful, reviewText, author FROM " + TABLE_REVIEW + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
-        if (c == null) {
+        if (c.getCount() == 0) {
             return f;
         }
         else {
@@ -174,7 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 int helpful = c.getInt(0);
                 String reviewText = c.getString(1);
-                String author = c.getString(1);
+                String author = c.getString(2);
                 Review temp = new Review(helpful, reviewText, author);
                 f.add(temp);
             } while (c.moveToNext());

@@ -65,14 +65,6 @@ public class LocationActivity extends AppCompatActivity{
         possible_places_count = getIntent().getExtras().getInt("PLACES_COUNT");
         possible_places = getIntent().getStringArrayListExtra("PLACES");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Programmatically fill in menu order options

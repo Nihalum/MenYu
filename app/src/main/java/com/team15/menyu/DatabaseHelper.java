@@ -79,28 +79,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public String getPassword(String uname) {
-        db = this.getReadableDatabase();
-        String query = "SELECT pass FROM " + TABLE_PERSON + " WHERE email = " + "'"+uname+"'";
-        Cursor c = db.rawQuery(query, null);
-        Log.d("lol", c.toString());
-        if (c == null) {
-            //db.close();
-            return "No such user";
-        }
-        //db.close();
-        c.moveToFirst();
-        return c.getString(0);
-    }
-
-    public void insertPerson(Person p) {
-        db = this.getWritableDatabase();
-        ContentValues val = new ContentValues();
-        val.put(name, p.getName());
-        val.put(email, p.getEmail());
-        val.put(pass, p.getPass());
-        val.put(type, p.getType());
-        db.insert(TABLE_PERSON, null, val);
-        db.close();
-    }
 }

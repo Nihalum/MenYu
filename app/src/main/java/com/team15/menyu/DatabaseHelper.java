@@ -87,7 +87,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT food, upvotes, downvotes, noOfReviews FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "'";
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
-        if (c != null) {
+        if (c == null) {
+            return null;
+        }
+        else {
             c.moveToFirst();
             do {
                 String food = c.getString(0);
@@ -99,9 +102,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
             return f;
         }
-        else {
-            return null;
-        }
     }
-
 }

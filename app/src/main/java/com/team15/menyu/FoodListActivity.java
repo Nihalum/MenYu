@@ -78,6 +78,8 @@ public class FoodListActivity extends ListActivity {
             public void onClick(DialogInterface dialog, int which) {
                 m_Text = input.getText().toString();
                 //ADD FOOD TO DB
+                finish();
+                startActivity(getIntent());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

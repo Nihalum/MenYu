@@ -11,13 +11,14 @@
 
     <RelativeLayout
         android:id="@+id/header"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="100dp">
         <TextView
             android:id="@+id/restaurantTitle"
             android:textSize="32dp"
             android:textStyle="bold"
+            android:textColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

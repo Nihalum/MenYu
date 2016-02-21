@@ -5,16 +5,30 @@ package com.team15.menyu;
  */
 public class Review {
     int id, helpful;
-    String resName,food, reviewText, author;
+    String resName, food, reviewText, author;
 
     public Review() {
-
+        this.resName = "restaurantDefault";
+        this.food = "foodDefault";
+        this.reviewText= "reviewDefault...";
+        this.author = "authorDefault";
+        this.helpful = 99;
     }
+
+    public Review(String rName, String fud, String reviewT, String auth) {
+        this.resName = rName;
+        this.food = fud;
+        this.reviewText= reviewT;
+        this.author = auth;
+        this.helpful = 0;
+    }
+
     public Review(int helpful, String reviewText, String author) {
         this.helpful = helpful;
         this.reviewText = reviewText;
         this.author = author;
     }
+
     public void setId(int id) {
         this.id = id;
     }

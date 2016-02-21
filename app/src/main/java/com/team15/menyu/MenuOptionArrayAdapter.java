@@ -1,6 +1,7 @@
 package com.team15.menyu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,16 @@ import java.util.ArrayList;
 public class MenuOptionArrayAdapter extends ArrayAdapter<FoodItem> {
     private final Context context;
     private final ArrayList<FoodItem> values;
+    private final String restaurantTitle_I;
+    private final String userEmail_I;
 
-    public MenuOptionArrayAdapter(Context context, ArrayList<FoodItem> values) {
+    public MenuOptionArrayAdapter(Context context, ArrayList<FoodItem> values,
+                                  String restaurant, String userE) {
         super(context, R.layout.menu_option, values);
         this.context = context;
         this.values = values;
+        this.restaurantTitle_I = restaurant;
+        this.userEmail_I = userE;
     }
 
     @Override
@@ -35,11 +41,16 @@ public class MenuOptionArrayAdapter extends ArrayAdapter<FoodItem> {
         //TODO: CHANGE THIS TO BOTH UPVOTES AND DOWNVOTES
         foodRating.setText(values.get(position).rating);
         imageView.setImageResource(R.drawable.ic_menu_camera);
+
+        final String fud = values.get(position).name;
         tempView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(view.getContext(), ReviewListActivity.class);
+                intent.putExtra("RESTAURANT", restaurantTitle_I);
+                intent.putExtra("EMAIL", userEmail_I);
+                intent.putExtra("FOODNAME", fud);
+                view.getContext().startActivity(intent);
             }
         });
 

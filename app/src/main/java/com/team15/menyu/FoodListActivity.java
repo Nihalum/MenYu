@@ -110,7 +110,8 @@ public class FoodListActivity extends ListActivity {
         values.add(temp);
 
 //        ArrayList<Food> values = db.getFood(restaurantTitle_I);
-        MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);
+        MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values,
+                restaurantTitle_I, userEmail_I);
         setListAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

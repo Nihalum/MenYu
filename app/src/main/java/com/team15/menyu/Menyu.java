@@ -138,16 +138,15 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
     private void getCurrentPlaces() throws SecurityException {
         PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
                 .getCurrentPlace(mGoogleApiClient, null);
-        Log.i(LOG_TAG, "hi1");
         result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
             @Override
             public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
-                Log.i(LOG_TAG, "hi");
+                //Log.i(LOG_TAG, "hi");
                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
                     if (placeLikelihood.getLikelihood() > 0.1 || placeLikelihood.getPlace().getPlaceTypes().contains(38)) {
                         possible_places.add(placeLikelihood.getPlace().getName().toString());
-                        Log.i(LOG_TAG, String.format("Place '%s' with type: num '%d'",
-                                placeLikelihood.getPlace().getName(), possible_places_count));
+                        //Log.i(LOG_TAG, String.format("Place '%s' with type: num '%d'",
+                           //     placeLikelihood.getPlace().getName(), possible_places_count));
                         possible_places_count += 1;
 
                     }

@@ -5,9 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +28,31 @@ public class LocationActivity extends AppCompatActivity{
     private static List<String> possible_places = new ArrayList<String>();
     private static int possible_places_count = 0;
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.location, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            Intent intent = new Intent(this, Menyu.class);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +73,14 @@ public class LocationActivity extends AppCompatActivity{
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Programmatically fill in menu order options
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float dp = 80f;
+        float dp = 70f;
         int pixels = (int) (metrics.density * dp + 0.5f);
-        float dpBorder = 1f;
-        int pixelBorder = (int) (metrics.density * dp + 0.5f);
+        float dpBorder = 2f;
+        int pixelBorder = (int) (metrics.density * dpBorder + 0.5f);
 
         LinearLayout list = (LinearLayout) findViewById(R.id.scrollingListTEMP);
 
@@ -60,21 +88,23 @@ public class LocationActivity extends AppCompatActivity{
 
         String[] placesTitles = new String[listItems];//CHANGED
         placesTitles = possible_places.toArray(placesTitles);//CHANGED
-        String[] itemReviews = {"/%d reviews", "'d101 reviews", "f240 reviews", "444", "555", "666"}; //DAVID same
+
+        TextView restaurant = (TextView) findViewById(R.id.pick_location);
+        restaurant.setText("Pick Your Location");
 
         for(int i = 0; i < listItems; i++) {
             RelativeLayout listBox = new RelativeLayout(this);
-            listBox.setBackgroundColor(Color.LTGRAY);
+            listBox.setBackgroundColor(Color.rgb(236, 240, 241));//clouds color
             RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, //width
-                    pixels);                                  //height
+                    RelativeLayout.LayoutParams.MATCH_PARENT, //width?
+                    pixels);                                  //height?
             listBox.setLayoutParams(rlp);
 
             // Defining the layout parameters of the TextView
             RelativeLayout.LayoutParams lpTitle = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT,
                     RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            lpTitle.addRule(RelativeLayout.CENTER_IN_PARENT);
 
             // Setting the RelativeLayout as our content view
             //setContentView(listBox, rlp); //IDK WHAT THIS DOES BESIDES CAUSE APP TO CRASH
@@ -88,24 +118,20 @@ public class LocationActivity extends AppCompatActivity{
             title.setLayoutParams(lpTitle);
             listBox.addView(title);
 
-            RelativeLayout.LayoutParams lpReviews = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            lpReviews.addRule(RelativeLayout.BELOW, i + 1); //apparently this is better
-            //than title.getId()
 
-            TextView reviews = new TextView(this);
-            reviews.setLayoutParams(lpReviews);
-            reviews.setText(itemReviews[i]);
-            reviews.setTextSize(14);
-            reviews.setTextColor(Color.DKGRAY);
-            reviews.setPadding(8, 4, 8, 8);
-            reviews.setId(i + 101);
-            listBox.addView(reviews);
+            RelativeLayout border = new RelativeLayout(this);
+            border.setBackgroundColor(Color.rgb(241, 196, 15));//pumpkin color
+            RelativeLayout.LayoutParams rlpborder = new RelativeLayout.LayoutParams(
+                    (RelativeLayout.LayoutParams.MATCH_PARENT), //width?
+                    pixelBorder);//height?
+
+            border.setLayoutParams(rlpborder);
+
+            list.addView(border);
 
             list.addView(listBox);
-            //Need to add buttons on sid
+            //Need to add buttons on side
         }
-
     }
+
 }

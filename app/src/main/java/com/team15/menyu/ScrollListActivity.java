@@ -33,18 +33,21 @@ public class ScrollListActivity extends AppCompatActivity {
 
     //Programmatically fill in menu order options
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        float dp = 80f;
+        float dp = 70f;
         int pixels = (int) (metrics.density * dp + 0.5f);
-        float dpBorder = 1f;
+        float dpBorder = 2f;
         int pixelBorder = (int) (metrics.density * dpBorder + 0.5f);
 
         LinearLayout list = (LinearLayout) findViewById(R.id.scrollingListTEMP);
         int listItems = 6; //HOW MANY PLACES
         String[] itemTitles = {"Ayy lmao", "Dank Memes", "Jet Fuel with a side of Steel Beams", "4", "5", "6"}; //DAVID convert from your PlaceLikelihood
 
+        TextView restaurant = (TextView) findViewById(R.id.pick_location);
+        restaurant.setText("Pick Your Location");
+
         for(int i = 0; i < listItems; i++) {
             RelativeLayout listBox = new RelativeLayout(this);
-            listBox.setBackgroundColor(Color.rgb(243,156,18));//orange color
+            listBox.setBackgroundColor(Color.rgb(236, 240, 241));//clouds color
             RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, //width?
                     pixels);                                  //height?
@@ -70,10 +73,11 @@ public class ScrollListActivity extends AppCompatActivity {
 
 
             RelativeLayout border = new RelativeLayout(this);
-            border.setBackgroundColor(Color.LTGRAY);//pumpkin color
+            border.setBackgroundColor(Color.rgb(241, 196, 15));//pumpkin color
             RelativeLayout.LayoutParams rlpborder = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.MATCH_PARENT, //width?
-                    pixelBorder);                                  //height?
+                    (RelativeLayout.LayoutParams.MATCH_PARENT), //width?
+                    pixelBorder);//height?
+
             border.setLayoutParams(rlpborder);
 
             list.addView(border);

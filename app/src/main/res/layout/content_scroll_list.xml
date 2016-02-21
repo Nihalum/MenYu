@@ -13,11 +13,19 @@
         android:id="@+id/header"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="90dp">
         <TextView
-            android:id="@+id/temp"
+            android:id="@+id/pick_location"
+            android:textSize="35dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center" />
     </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"

@@ -47,7 +47,7 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     }
     private void next() {
-        Intent intent = new Intent(this, LocationActivity.class);
+        Intent intent = new Intent(this, ScrollListActivity.class);
         startActivity(intent);
         finish();
     }

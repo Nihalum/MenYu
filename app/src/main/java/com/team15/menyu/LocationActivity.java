@@ -1,5 +1,6 @@
 package com.team15.menyu;
 
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
@@ -28,6 +32,8 @@ public class LocationActivity extends AppCompatActivity{
     private static List<String> possible_places = new ArrayList<String>();
     private static int possible_places_count = 0;
     public final static String RESTAURANT = "com.team15.rohitslist.MESSAGE";
+    private static final int REQUEST_CODE_EMAIL = 1;
+    private String userEmail = "";
 
 
     @Override
@@ -50,9 +56,22 @@ public class LocationActivity extends AppCompatActivity{
             startActivity(intent);
             finish();
             return true;
+        } else if (id == R.id.action_logout) {
+            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                    new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
+            startActivityForResult(intent, REQUEST_CODE_EMAIL);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_EMAIL && resultCode == RESULT_OK) {
+            userEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            Log.v(LOG_TAG, userEmail);
+        }
     }
 
     @Override

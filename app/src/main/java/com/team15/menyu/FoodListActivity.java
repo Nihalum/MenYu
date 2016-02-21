@@ -39,7 +39,11 @@ public class FoodListActivity extends ListActivity {
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
         restaurant.setText(restaurantTitle_I);
 
-        ArrayList<Food> values = db.getFood(restaurantTitle_I);
+        ArrayList<FoodItem> values = new ArrayList<FoodItem>();
+        FoodItem temp = new FoodItem();
+        values.add(temp);
+
+//        ArrayList<Food> values = db.getFood(restaurantTitle_I);
         MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);
         setListAdapter(adapter);
 

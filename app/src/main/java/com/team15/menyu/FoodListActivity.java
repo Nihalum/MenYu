@@ -33,7 +33,12 @@ public class FoodListActivity extends ListActivity {
         DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        String restaurantTitle_I = ""; //= intent.getStringExtra(LocationActivity.EXTRA_MESSAGE);
+
+        Intent intent = getIntent();
+        String restaurantTitle_I = intent.getStringExtra(LocationActivity.RESTAURANT);
+        TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
+        restaurant.setText(restaurantTitle_I);
+
         ArrayList<Food> values = db.getFood(restaurantTitle_I);
         MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);
         setListAdapter(adapter);
@@ -46,14 +51,6 @@ public class FoodListActivity extends ListActivity {
                         .setAction("Action", null).show();
             }
         });
-//
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        //Intent intent = getIntent();
-
-        TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
-        //restaurant.setText(restaurantTitle_I);
-        restaurant.setText("PLACEHOLDER TEA CAFE");
 
     }
 }

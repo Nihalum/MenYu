@@ -27,6 +27,7 @@ public class LocationActivity extends AppCompatActivity{
     private static final String LOG_TAG = "PlacesAPIActivity";
     private static List<String> possible_places = new ArrayList<String>();
     private static int possible_places_count = 0;
+    public final static String RESTAURANT = "com.team15.rohitslist.MESSAGE";
 
 
     @Override
@@ -64,7 +65,8 @@ public class LocationActivity extends AppCompatActivity{
 
         possible_places_count = getIntent().getExtras().getInt("PLACES_COUNT");
         possible_places = getIntent().getStringArrayListExtra("PLACES");
-        
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //Programmatically fill in menu order options
@@ -110,6 +112,17 @@ public class LocationActivity extends AppCompatActivity{
             title.setLayoutParams(lpTitle);
             listBox.addView(title);
 
+            final TextView temp = title;
+            final String sendMe = placesTitles[i]; //Restaurant Name
+            listBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(view.getContext(), FoodListActivity.class);
+                    String restaurantName = temp.getText().toString();
+                    intent.putExtra(RESTAURANT, restaurantName);
+                    startActivity(intent);
+                }
+            });
 
             RelativeLayout border = new RelativeLayout(this);
             border.setBackgroundColor(Color.rgb(241, 196, 15));//pumpkin color

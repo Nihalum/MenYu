@@ -103,7 +103,7 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
             String url=params[0];
             getCurrentPlaces();
 
-            while(possible_places_count <= 1) {
+            while(possible_places_count <= 0) {
                 try {
                     Thread.sleep(50);
                     Log.v(LOG_TAG, "waiting");

@@ -23,18 +23,18 @@ import android.widget.ListView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class FoodListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
-        FoodItem[] values = new FoodItem[6];
-        for(int i = 0; i < 6; i++)  //ROHIT PUT IN THE ACTUAL SQL VALUES
-        {
-            values[i] = new FoodItem("Fried Chicken Cutlet", 12, 30);
-//            values[i] = new FoodItem();
-        }
+        String restaurantTitle_I = ""; //= intent.getStringExtra(LocationActivity.EXTRA_MESSAGE);
+        ArrayList<Food> values = db.getFood(restaurantTitle_I);
         MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);
         setListAdapter(adapter);
 
@@ -50,7 +50,7 @@ public class FoodListActivity extends ListActivity {
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Intent intent = getIntent();
-        //String restaurantTitle_I = intent.getStringExtra(LocationActivity.EXTRA_MESSAGE);
+
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
         //restaurant.setText(restaurantTitle_I);
         restaurant.setText("PLACEHOLDER TEA CAFE");

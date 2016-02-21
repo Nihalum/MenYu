@@ -7,6 +7,15 @@ public class Food {
     int id,upvotes, downvotes, noOfReviews;
     String resName,food;
 
+    public Food() {
+
+    }
+    public Food(int upvotes, int downvotes, int noOfReviews, String food) {
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
+        this.noOfReviews = noOfReviews;
+        this.food = food;
+    }
     public void setId(int id) {
         this.id = id;
     }

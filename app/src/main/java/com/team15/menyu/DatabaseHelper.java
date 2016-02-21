@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 /**
  * Created by RohitRamesh on 2/6/2016.
  */
@@ -77,6 +79,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // create new tables
         onCreate(db);
+    }
+
+    public ArrayList<Food> getFood(String restaurant) {
+        ArrayList<Food> f = new ArrayList<Food>();
+        db = this.getReadableDatabase();
+        String query = "SELECT food, upvotes, downvotes, noOfReviews FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d("lol", c.toString());
+        if (c != null) {
+            c.moveToFirst();
+            do {
+                String food = c.getString(0);
+                int upvotes = c.getInt(1);
+                int downvotes = c.getInt(2);
+                int noOfReviews = c.getInt(3);
+                Food temp = new Food(upvotes, downvotes, noOfReviews, food);
+                f.add(temp);
+            } while (c.moveToNext());
+            return f;
+        }
+        else {
+            return null;
+        }
     }
 
 }

@@ -146,7 +146,7 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
             public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
                 //Log.i(LOG_TAG, "hi");
                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    if (placeLikelihood.getLikelihood() > 0.1 || placeLikelihood.getPlace().getPlaceTypes().contains(38)) {
+                    if (placeLikelihood.getLikelihood() > 0.1 && placeLikelihood.getPlace().getPlaceTypes().contains(38)) {
                         possible_places.add(placeLikelihood.getPlace().getName().toString());
                         //Log.i(LOG_TAG, String.format("Place '%s' with type: num '%d'",
                         //        placeLikelihood.getPlace().getName(), possible_places_count));

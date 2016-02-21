@@ -43,6 +43,7 @@ public class ReviewListActivity extends ListActivity {
         Intent intent = getIntent();
         final String restaurantTitle_I = intent.getStringExtra("RESTAURANT");
         final String foodTitle_I = intent.getStringExtra("FOODNAME");
+        final String userEmail_I = intent.getStringExtra("EMAIL");
 
         TextView restaurant = (TextView) findViewById(R.id.foodName);
         restaurant.setText(foodTitle_I);
@@ -52,7 +53,8 @@ public class ReviewListActivity extends ListActivity {
 //        values.add(temp);
 
         ArrayList<Review> values = db.getReview(restaurantTitle_I, foodTitle_I);
-        ReviewOptionArrayAdapter adapter = new ReviewOptionArrayAdapter(this, values);
+        ReviewOptionArrayAdapter adapter = new ReviewOptionArrayAdapter(this, values,
+                                restaurantTitle_I, foodTitle_I, userEmail_I);
         setListAdapter(adapter);
 
         final ToggleButton upVote = (ToggleButton) findViewById(R.id.upVote);

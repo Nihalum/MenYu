@@ -129,7 +129,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues val = new ContentValues();
             val.put("upvotes", upvotes);
             val.put("downvotes", downvotes);
-            db.update(TABLE_FOOD, val, "_id="+id, null);
+            db.update(TABLE_FOOD, val, "_id=" + id, null);
             //db.close();
             } while (c.moveToNext());
         }
@@ -178,6 +178,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 f.add(temp);
             } while (c.moveToNext());
             return f;
+        }
+    }
+
+    public void updateHelpful(Review r) {
+        int helpful, id;
+        db = this.getReadableDatabase();
+        String query = "SELECT helpful, id FROM " + TABLE_REVIEW + " WHERE resName = '" + r.getName() + "' AND food = '" + r.getFood() + "' AND author = '" + r.getAuthor() + "'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d("lol", c.toString());
+        if(c.getCount() == 0) {
+            return;
+        }
+        else {
+            c.moveToFirst();
+            do {
+                helpful = c.getInt(0);
+                id = c.getInt(1);
+                helpful = helpful + 1;
+            } while (c.moveToNext());
+            db = this.getWritableDatabase();
+            ContentValues val = new ContentValues();
+            val.put("helpful", helpful);
+            db.update(TABLE_REVIEW, val, "_id=" + id, null);
+            db.close();
         }
     }
 

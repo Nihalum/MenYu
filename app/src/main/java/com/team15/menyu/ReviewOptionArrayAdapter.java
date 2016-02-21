@@ -22,13 +22,22 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 
 public class ReviewOptionArrayAdapter extends ArrayAdapter<Review> {
+
+    DatabaseHelper db = new DatabaseHelper(this.getContext());
     private final Context context;
     private final ArrayList<Review> values;
+    private final String restaurant;
+    private final String foodName;
+    private final String userEmail;
 
-    public ReviewOptionArrayAdapter(Context context, ArrayList<Review> values) {
+    public ReviewOptionArrayAdapter(Context context, ArrayList<Review> values,
+                                    String a, String b, String c) {
         super(context, R.layout.review_option, values);
         this.context = context;
         this.values = values;
+        this.restaurant = a;
+        this.foodName = b;
+        this.userEmail = c;
     }
 
     @Override
@@ -78,38 +87,40 @@ public class ReviewOptionArrayAdapter extends ArrayAdapter<Review> {
         float togHdp = 38f;
         int togHPix = (int) (metrics.density * togHdp + 0.5f);
 
-
-        final ToggleButton helpful = new ToggleButton(this.getContext());
-        helpful.setText("Helpful");
-        helpful.setTextOn("Helpful");
-        helpful.setTextOff("Helpful");
-        helpful.setBackgroundColor(Color.LTGRAY);
-        helpful.setChecked(false);
-        helpful.setTextColor(Color.BLACK);//green color
-
-        LinearLayout.LayoutParams tog = new LinearLayout.LayoutParams(togPix, togHPix);
-        tog.setMargins(sideMargin*10, topMargin, sideMargin, 0);
-
-        helpful.setLayoutParams(tog);
-
-        helpful.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (helpful.isChecked()) {
-                    helpful.setBackgroundColor(Color.rgb(22, 160, 133));//green color
-                } else {
-                    helpful.setBackgroundColor(Color.LTGRAY);
-                    //helpful.setTextColor(Color.DKGRAY);
-                }
-            }
-        });
+//
+//        final ToggleButton helpful = new ToggleButton(this.getContext());
+//        helpful.setText("Helpful");
+//        helpful.setTextOn("Helpful");
+//        helpful.setTextOff("Helpful");
+//        helpful.setBackgroundColor(Color.LTGRAY);
+//        helpful.setChecked(false);
+//        helpful.setTextColor(Color.BLACK);//green color
+//
+//        LinearLayout.LayoutParams tog = new LinearLayout.LayoutParams(togPix, togHPix);
+//        tog.setMargins(sideMargin*10, topMargin, sideMargin, 0);
+//
+//        helpful.setLayoutParams(tog);
+//
+//        helpful.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (helpful.isChecked()) {
+//                    helpful.setBackgroundColor(Color.rgb(22, 160, 133));//green color
+//                    Review r = new Review(restaurant, userEmail, foodName);
+//                    db.updateHelpful(r);
+//                } else {
+//                    helpful.setBackgroundColor(Color.LTGRAY);
+//                    //helpful.setTextColor(Color.DKGRAY);
+//                }
+//            }
+//        });
 
         TextView review = new TextView(this.getContext());
         review.setText(texts);
 
         builder.setView(review);
         layout.addView(review, params);
-        layout.addView(helpful);
+        //layout.addView(helpful);
         builder.setView(layout);
 
         builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {

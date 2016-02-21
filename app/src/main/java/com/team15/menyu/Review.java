@@ -29,6 +29,12 @@ public class Review {
         this.author = author;
     }
 
+    public Review(String name, String author, String food) {
+        this.resName = name;
+        this.author = author;
+        this.food = food;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

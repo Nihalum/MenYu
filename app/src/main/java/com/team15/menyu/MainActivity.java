@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ScrollListActivity.class);
+                Intent intent = new Intent(view.getContext(), FoodListActivity.class);
                 view.getContext().startActivity(intent);
             }
         });

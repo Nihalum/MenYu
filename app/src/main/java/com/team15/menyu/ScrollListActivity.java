@@ -1,5 +1,6 @@
 package com.team15.menyu;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.text.NumberFormat;
 
@@ -58,6 +60,16 @@ public class ScrollListActivity extends AppCompatActivity {
                 pixels);                                  //height?
         listBox.setLayoutParams(rlp);
 
+        final int temp1 = i;
+        listBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "no touchy me" + temp1, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+            }
+        });
+
         // Defining the layout parameters of the TextView
         RelativeLayout.LayoutParams lpTitle = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -69,7 +81,7 @@ public class ScrollListActivity extends AppCompatActivity {
 
         TextView title = new TextView(this);
         title.setText(itemTitles[i]);
-        title.setTextAppearance(this, android.R.style.TextAppearance_Small); //this is API23 only
+        title.setTextAppearance(this, android.R.style.TextAppearance_Large);
         title.setTextColor(Color.BLACK);
         title.setPadding(8, 8, 8, 4);
         title.setId(i+1); //setID has to have positive Int as parameter
@@ -86,13 +98,13 @@ public class ScrollListActivity extends AppCompatActivity {
         reviews.setLayoutParams(lpReviews);
         reviews.setText(itemReviews[i]);
         reviews.setTextSize(14);
+        title.setTextAppearance(this,android.R.style.TextAppearance_Medium);
         reviews.setTextColor(Color.DKGRAY);
         reviews.setPadding(8, 4, 8, 8);
         reviews.setId(i + 101);
         listBox.addView(reviews);
 
         list.addView(listBox);
-        //Need to add buttons on side
     }
 
     }

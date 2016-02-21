@@ -87,7 +87,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT food, upvotes, downvotes, noOfReviews FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "'";
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
-        if (c != null) {
+        if (c == null) {
+            return f;
+        }
+        else {
             c.moveToFirst();
             do {
                 String food = c.getString(0);
@@ -99,8 +102,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
             return f;
         }
+    }
+
+    public void addFood(Food f) {
+        db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put(restaurant, f.getName());
+        val.put(food, f.getFood());
+        val.put(upvotes, f.getUpVotes());
+        val.put(downvotes, f.getDownVotes());
+        val.put(noOfReviews, f.getNoOfReviews());
+        db.insert(TABLE_FOOD, null, val);
+        db.close();
+    }
+
+    public void addReview(Review r) {
+        db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put(restaurant, r.getName());
+        val.put(food, r.getFood());
+        val.put(helpful, r.getHelpful());
+        val.put(author, r.getAuthor());
+        val.put(reviewText, r.getReview());
+        db.insert(TABLE_FOOD, null, val);
+        db.close();
+    }
+
+    public ArrayList<Review> getReview(String restaurant, String food) {
+        ArrayList<Review> f = new ArrayList<Review>();
+        db = this.getReadableDatabase();
+        String query = "SELECT helpful, reviewText, author FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d("lol", c.toString());
+        if (c == null) {
+            return f;
+        }
         else {
-            return null;
+            c.moveToFirst();
+            do {
+                int helpful = c.getInt(0);
+                String reviewText = c.getString(1);
+                String author = c.getString(1);
+                Review temp = new Review(helpful, reviewText, author);
+                f.add(temp);
+            } while (c.moveToNext());
+            return f;
         }
     }
 

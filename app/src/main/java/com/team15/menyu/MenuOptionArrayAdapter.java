@@ -9,11 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MenuOptionArrayAdapter extends ArrayAdapter<FoodItem> {
+public class MenuOptionArrayAdapter extends ArrayAdapter<Food> {
     private final Context context;
-    private final FoodItem[] values;
+    private final Food[] values;
 
-    public MenuOptionArrayAdapter(Context context, FoodItem[] values) {
+    public MenuOptionArrayAdapter(Context context, Food[] values) {
         super(context, R.layout.menu_option, values);
         this.context = context;
         this.values = values;
@@ -28,9 +28,11 @@ public class MenuOptionArrayAdapter extends ArrayAdapter<FoodItem> {
         TextView foodReviewCount = (TextView) tempView.findViewById(R.id.reviewsOfFood);
         TextView foodRating = (TextView) tempView.findViewById(R.id.ratingOfFood);
         ImageView imageView = (ImageView) tempView.findViewById(R.id.photoOfFood);
-        foodName.setText(values[position].name);
-        foodReviewCount.setText(values[position].reviews);
-        foodRating.setText(values[position].rating);
+        foodName.setText(values[position].getFood());
+        foodReviewCount.setText(values[position].getNoOfReviews());
+
+        //TODO: CHANGE THIS TO BOTH UPVOTES AND DOWNVOTES
+        foodRating.setText(values[position].getUpVotes());
         imageView.setImageResource(R.drawable.ic_menu_camera);
         tempView.setOnClickListener(new View.OnClickListener() {
             @Override

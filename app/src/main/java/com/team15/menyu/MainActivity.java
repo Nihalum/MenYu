@@ -1,11 +1,9 @@
 package com.team15.menyu;
 
-import android.content.Intent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,10 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+        implements NavigationView.OnNavigationItemSelectedListener{
+/**
+    private GoogleApiClient mGoogleApiClient;
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private static final String LOG_TAG = "PlacesAPIActivity";
+    public static List<String> possible_places = new ArrayList<String>();
+    public static int possible_places_count = 0;
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +30,18 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /**mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, GOOGLE_API_CLIENT_ID, this)
+                .build();
+
+        getCurrentPlaces();
+        */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ScrollListActivity.class);
+                Intent intent = new Intent(view.getContext(), LocationActivity.class);
                 view.getContext().startActivity(intent);
             }
         });
@@ -115,4 +127,36 @@ public class MainActivity extends AppCompatActivity
         Intent intent = new Intent(this, ScrollListActivity.class);
         startActivity(intent);
     }
+    /**
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: "
+                + connectionResult.getErrorCode());
+
+        Toast.makeText(this,
+                "Google Places API connection failed with error code:" +
+                        connectionResult.getErrorCode(),
+                Toast.LENGTH_LONG).show();
+    }
+    private void getCurrentPlaces() throws SecurityException {
+        PendingResult<PlaceLikelihoodBuffer> result = Places.PlaceDetectionApi
+                .getCurrentPlace(mGoogleApiClient, null);
+        result.setResultCallback(new ResultCallback<PlaceLikelihoodBuffer>() {
+            @Override
+            public void onResult(PlaceLikelihoodBuffer likelyPlaces) {
+                Log.i(LOG_TAG, "hi");
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    if (placeLikelihood.getLikelihood() > 0.1 || placeLikelihood.getPlace().getPlaceTypes().contains(38)) {
+                        possible_places.add(placeLikelihood.getPlace().getName().toString());
+                        Log.i(LOG_TAG, String.format("Place '%s' with type: num '%d'",
+                                placeLikelihood.getPlace().getName(), possible_places_count));
+                        possible_places_count += 1;
+
+                    }
+                }
+                likelyPlaces.release();
+            }
+
+        });
+    }*/
 }

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class FoodListActivity extends ListActivity {
 
-    private String m_Text = "";
+    private String foodName = "";
 
     private void dialogText(){
 
@@ -76,8 +76,9 @@ public class FoodListActivity extends ListActivity {
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
-                //ADD FOOD TO DB
+                foodName = input.getText().toString();
+                //ADD FOOD ITEM (foodName) + RESTAURANT NAME (restaurantTitle_I) TO DB
+
                 finish();
                 startActivity(getIntent());
             }

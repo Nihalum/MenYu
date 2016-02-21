@@ -48,14 +48,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Create Statements
     // Todo table create statement
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
-            + TABLE_FOOD + "(" + id + " INTEGER PRIMARY KEY, " + food
+            + TABLE_FOOD + "(" + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + food
             + " TEXT, " + restaurant + " TEXT, " + upvotes
             + " INTEGER, " + downvotes + " INTEGER, " + noOfReviews +
             " INTEGER" + ")";
 
     // Tag table create statement
     private static final String CREATE_TABLE_REVIEW = "CREATE TABLE " + TABLE_REVIEW
-            + "(" + id + " INTEGER PRIMARY KEY, " + food + " TEXT, "
+            + "(" + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + food + " TEXT, "
             + restaurant + " TEXT, " + helpful + " INTEGER, " + reviewText + " TEXT, "
             + author + " TEXT" + ")";
 
@@ -88,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
         if (c == null) {
-            return null;
+            return f;
         }
         else {
             c.moveToFirst();
@@ -102,5 +102,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
             return f;
         }
+    }
+
+    public void addFood(Food f) {
+        db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put(restaurant, f.getName());
+        val.put(food, f.getFood());
+        val.put(upvotes, f.getUpVotes());
+        val.put(downvotes, f.getDownVotes());
+        val.put(noOfReviews, f.getNoOfReviews());
+        db.insert(TABLE_FOOD, null, val);
+        db.close();
+
     }
 }

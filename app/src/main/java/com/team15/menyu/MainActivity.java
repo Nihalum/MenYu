@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
 
 
-            ProgressDialog dialog = new ProgressDialog(this); // this = YourActivity
+            ProgressDialog dialog = new ProgressDialog(this);
             dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             dialog.setMessage("Loading. Please wait...");
             dialog.setIndeterminate(true);

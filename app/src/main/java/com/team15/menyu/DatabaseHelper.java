@@ -48,14 +48,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Create Statements
     // Todo table create statement
     private static final String CREATE_TABLE_FOOD = "CREATE TABLE "
-            + TABLE_FOOD + "(" + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + food
+            + TABLE_FOOD + "(" + id + " INTEGER PRIMARY KEY, " + food
             + " TEXT, " + restaurant + " TEXT, " + upvotes
             + " INTEGER, " + downvotes + " INTEGER, " + noOfReviews +
             " INTEGER" + ")";
 
     // Tag table create statement
     private static final String CREATE_TABLE_REVIEW = "CREATE TABLE " + TABLE_REVIEW
-            + "(" + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " + food + " TEXT, "
+            + "(" + id + " INTEGER PRIMARY KEY, " + food + " TEXT, "
             + restaurant + " TEXT, " + helpful + " INTEGER, " + reviewText + " TEXT, "
             + author + " TEXT" + ")";
 
@@ -114,6 +114,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         val.put(noOfReviews, f.getNoOfReviews());
         db.insert(TABLE_FOOD, null, val);
         db.close();
-
     }
+
+    public void addReview(Review r) {
+        db = this.getWritableDatabase();
+        ContentValues val = new ContentValues();
+        val.put(restaurant, r.getName());
+        val.put(food, r.getFood());
+        val.put(helpful, r.getHelpful());
+        val.put(author, r.getAuthor());
+        val.put(reviewText, r.getReview());
+        db.insert(TABLE_FOOD, null, val);
+        db.close();
+    }
+
+    public ArrayList<Review> getReview(String restaurant, String food) {
+        ArrayList<Review> f = new ArrayList<Review>();
+        db = this.getReadableDatabase();
+        String query = "SELECT helpful, reviewText, author FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d("lol", c.toString());
+        if (c == null) {
+            return f;
+        }
+        else {
+            c.moveToFirst();
+            do {
+                int helpful = c.getInt(0);
+                String reviewText = c.getString(1);
+                String author = c.getString(1);
+                Review temp = new Review(helpful, reviewText, author);
+                f.add(temp);
+            } while (c.moveToNext());
+            return f;
+        }
+    }
+
 }

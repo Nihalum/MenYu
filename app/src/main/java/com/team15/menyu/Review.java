@@ -7,11 +7,25 @@ public class Review {
     int id, helpful;
     String resName,food, reviewText, author;
 
+    public Review() {
+
+    }
+    public Review(int helpful, String reviewText, String author) {
+        this.helpful = helpful;
+        this.reviewText = reviewText;
+        this.author = author;
+    }
     public void setId(int id) {
         this.id = id;
     }
     public int getId() {
         return this.id;
+    }
+    public void setHelpful(int helpful) {
+        this.helpful = helpful;
+    }
+    public int getHelpful() {
+        return this.helpful;
     }
     public void setName(String name) {
         this.resName = name;

@@ -56,6 +56,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.team15.menyu.LocationActivity" />
         </activity>
+        <activity
+            android:name=".ReviewListActivity"
+            android:label="@string/title_activity_review_list"
+            android:parentActivityName=".FoodListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.team15.menyu.FoodListActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -30,16 +30,15 @@ public class FoodListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_list);
 
-        //Intent intent = getIntent();
-        //String restaurantTitle_I = intent.getStringExtra(LocationActivity.EXTRA_MESSAGE);
+        Intent intent = getIntent();
+        String restaurantTitle_I = intent.getStringExtra(LocationActivity.RESTAURANT);
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
-        //restaurant.setText(restaurantTitle_I);
-        restaurant.setText("PLACEHOLDER TEA CAFE");
+        restaurant.setText(restaurantTitle_I);
 
-        Food[] values = new Food[6];
+        FoodItem[] values = new FoodItem[6];
         for(int i = 0; i < 6; i++)  //ROHIT PUT IN THE ACTUAL SQL VALUES
         {
-            values[i] = new Food();
+            values[i] = new FoodItem();
 //            values[i] = new FoodItem();
         }
         MenuOptionArrayAdapter adapter = new MenuOptionArrayAdapter(this, values);

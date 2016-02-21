@@ -4,9 +4,22 @@ package com.team15.menyu;
  * Created by RohitRamesh on 2/20/2016.
  */
 public class Food {
-    int id,upvotes, downvotes, noOfReviews;
+    int id, upvotes, downvotes, noOfReviews;
     String resName,food;
 
+    public Food() {
+        this.upvotes = 0;
+        this.downvotes = 0;
+        this.noOfReviews = 0;
+        this.food = "defaultConstructor";
+    }
+
+    public Food(int upvotes, int downvotes, int noOfReviews, String food) {
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
+        this.noOfReviews = noOfReviews;
+        this.food = food;
+    }
     public void setId(int id) {
         this.id = id;
     }

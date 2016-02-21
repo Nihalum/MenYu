@@ -28,7 +28,7 @@
         android:textSize="16dp"
         android:layout_below="@id/nameOfFood"
         android:layout_toRightOf="@id/photoOfFood"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:text="26 Reviews Written"
         android:layout_height="match_parent"
         android:gravity="center_vertical"/>
@@ -36,11 +36,12 @@
         android:id="@+id/ratingOfFood"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginRight="16dp"
         android:textSize="16dp"
         android:layout_below="@id/nameOfFood"
-        android:layout_toRightOf="@id/reviewsOfFood"
-        android:layout_width="110dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="50dp"
         android:text="+129"
         android:layout_height="match_parent"
-        android:gravity="center"/>
+        android:gravity="center|right"/>
 </RelativeLayout>

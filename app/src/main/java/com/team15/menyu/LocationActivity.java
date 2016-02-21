@@ -2,6 +2,7 @@ package com.team15.menyu;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,6 @@ public class LocationActivity extends AppCompatActivity{
     private static final String LOG_TAG = "PlacesAPIActivity";
     private static List<String> possible_places = new ArrayList<String>();
     private static int possible_places_count = 0;
-    public final static String RESTAURANT = "com.team15.rohitslist.MESSAGE";
     private static final int REQUEST_CODE_EMAIL = 1;
     private String userEmail = "";
 
@@ -71,6 +71,16 @@ public class LocationActivity extends AppCompatActivity{
         if (requestCode == REQUEST_CODE_EMAIL && resultCode == RESULT_OK) {
             userEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
             Log.v(LOG_TAG, userEmail);
+
+            // We need an Editor object to make preference changes.
+            // All objects are from android.context.Context
+            SharedPreferences settings = getSharedPreferences("EMAIL", 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("EMAIL", userEmail);
+
+            // Commit the edits!
+            editor.commit();
+
         }
     }
 
@@ -85,6 +95,16 @@ public class LocationActivity extends AppCompatActivity{
         possible_places_count = getIntent().getExtras().getInt("PLACES_COUNT");
         possible_places = getIntent().getStringArrayListExtra("PLACES");
 
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences("EMAIL", 0);
+        userEmail = settings.getString("EMAIL", "");
+        Log.v(LOG_TAG, userEmail);
+
+        if (userEmail == ""){
+            Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                    new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, false, null, null, null, null);
+            startActivityForResult(intent, REQUEST_CODE_EMAIL);
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
@@ -138,7 +158,8 @@ public class LocationActivity extends AppCompatActivity{
                 public void onClick(View view) {
                     Intent intent = new Intent(view.getContext(), FoodListActivity.class);
                     String restaurantName = temp.getText().toString();
-                    intent.putExtra(RESTAURANT, restaurantName);
+                    intent.putExtra("RESTAURANT", restaurantName);
+                    intent.putExtra("EMAIL", userEmail);
                     startActivity(intent);
                 }
             });

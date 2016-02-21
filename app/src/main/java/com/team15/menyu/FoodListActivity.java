@@ -35,7 +35,8 @@ public class FoodListActivity extends ListActivity {
         setContentView(R.layout.activity_food_list);
 
         Intent intent = getIntent();
-        String restaurantTitle_I = intent.getStringExtra(LocationActivity.RESTAURANT);
+        String restaurantTitle_I = intent.getStringExtra("RESTAURANT");
+        String userEmail_I = intent.getStringExtra("EMAIL"); //ADDED USEREMAIL HERE
         TextView restaurant = (TextView) findViewById(R.id.restaurantTitle);
         restaurant.setText(restaurantTitle_I);
 

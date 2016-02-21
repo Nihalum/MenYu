@@ -1,6 +1,7 @@
 package com.team15.menyu;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -27,8 +28,8 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
     private GoogleApiClient mGoogleApiClient;
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final String LOG_TAG = "PlacesAPIActivity";
-    private static List<String> possible_places = new ArrayList<String>();
-    private static int possible_places_count = 0;
+    private List<String> possible_places = new ArrayList<String>();
+    private int possible_places_count = 0;
     private static final int LOCATION_PERMISSION = 50;
 
     @Override
@@ -92,6 +93,9 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            Context context = getApplicationContext();
+            Toast toast = Toast.makeText(context, "Finding your location...", Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         @Override
@@ -102,7 +106,7 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
             while(possible_places_count <= 1) {
                 try {
                     Thread.sleep(50);
-                    //Log.v(LOG_TAG, "waiting");
+                    Log.v(LOG_TAG, "waiting");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -114,7 +118,6 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            Log.i(LOG_TAG, String.format("Places found:'%d'", possible_places_count));
         }
 
         @Override
@@ -146,7 +149,7 @@ public class Menyu extends AppCompatActivity implements GoogleApiClient.OnConnec
                     if (placeLikelihood.getLikelihood() > 0.1 || placeLikelihood.getPlace().getPlaceTypes().contains(38)) {
                         possible_places.add(placeLikelihood.getPlace().getName().toString());
                         //Log.i(LOG_TAG, String.format("Place '%s' with type: num '%d'",
-                           //     placeLikelihood.getPlace().getName(), possible_places_count));
+                        //        placeLikelihood.getPlace().getName(), possible_places_count));
                         possible_places_count += 1;
 
                     }

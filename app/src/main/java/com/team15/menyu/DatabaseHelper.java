@@ -104,6 +104,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void updateVotes(String restaurant, String food, boolean upvote, boolean downvote) {
+        db = this.getReadableDatabase();
+        int upvotes, downvotes, noOfReviews;
+        String id;
+        String query = "SELECT upvotes, downvotes, noOfReviews, _id FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
+        Cursor c = db.rawQuery(query, null);
+        Log.d("lol", c.toString());
+        if (c == null) {
+            return;
+        }
+        else {
+            c.moveToFirst();
+            do {
+                upvotes = c.getInt(0);
+                downvotes = c.getInt(1);
+                id = c.getString(2);
+            } while (c.moveToNext());
+            if(upvote == true) {
+                upvotes = upvotes + 1;
+            }
+            else if(downvote == true) {
+                downvotes = downvotes + 1;
+            }
+            db = this.getWritableDatabase();
+            ContentValues val = new ContentValues();
+            val.put("upvotes", upvotes);
+            val.put("downvotes", downvotes);
+            db.update(TABLE_FOOD, val, "_id="+id, null);
+            db.close();
+        }
+    }
+
     public void addFood(Food f) {
         db = this.getWritableDatabase();
         ContentValues val = new ContentValues();

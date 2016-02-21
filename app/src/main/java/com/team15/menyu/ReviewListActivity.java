@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,12 +36,12 @@ public class ReviewListActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DatabaseHelper db = new DatabaseHelper(this);
+        final DatabaseHelper db = new DatabaseHelper(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_list);
 
         Intent intent = getIntent();
-        String restaurantTitle_I = intent.getStringExtra("FOODNAME");
+        final String restaurantTitle_I = intent.getStringExtra("FOODNAME");
 //        String restaurantTitle_I = "ALLAHU ACKBAR";
         TextView restaurant = (TextView) findViewById(R.id.foodName);
         restaurant.setText(restaurantTitle_I);
@@ -52,6 +53,54 @@ public class ReviewListActivity extends ListActivity {
 //        ArrayList<Food> values = db.getFood(restaurantTitle_I);
         ReviewOptionArrayAdapter adapter = new ReviewOptionArrayAdapter(this, values);
         setListAdapter(adapter);
+
+        final ToggleButton upVote = (ToggleButton) findViewById(R.id.upVote);
+        final ToggleButton downVote = (ToggleButton) findViewById(R.id.downVote);
+
+        upVote.setText("Upvote");
+        upVote.setTextOff("Upvote");
+        upVote.setTextOn("Voted Up");
+        upVote.setBackgroundColor(Color.LTGRAY);
+        upVote.setChecked(false);
+        upVote.setTextColor(Color.BLACK);//green color
+
+        downVote.setText("Downvote");
+        downVote.setTextOff("Downvote");
+        downVote.setTextOn("Voted Down");
+        downVote.setBackgroundColor(Color.LTGRAY);
+        downVote.setChecked(false);
+        downVote.setTextColor(Color.BLACK);//green color
+
+        upVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (upVote.isChecked()) {
+                    upVote.setBackgroundColor(Color.rgb(22, 160, 133));//green color
+                    upVote.setEnabled(false);
+                    downVote.setEnabled(false);
+                    //db.updateVotes(restaurantTitle_I, foodTitle_I, true, false);
+                } else {
+                    upVote.setBackgroundColor(Color.LTGRAY);
+                    //helpful.setTextColor(Color.DKGRAY);
+                }
+            }
+        });
+
+        downVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (downVote.isChecked()) {
+                    downVote.setBackgroundColor(Color.rgb(22, 160, 133));//green color
+                    upVote.setEnabled(false);
+                    downVote.setEnabled(false);
+                    //db.updateVotes(restaurantTitle_I, foodTitle_I, false, true);
+                } else {
+                    downVote.setBackgroundColor(Color.LTGRAY);
+                    //helpful.setTextColor(Color.DKGRAY);
+                }
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

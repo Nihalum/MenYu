@@ -39,7 +39,7 @@ public class MenuOptionArrayAdapter extends ArrayAdapter<Food> {
         foodReviewCount.setText(Integer.toString(values.get(position).getNoOfReviews()));
 
         //TODO: CHANGE THIS TO BOTH UPVOTES AND DOWNVOTES
-        int sum = values.get(position).getDownVotes() + values.get(position).getUpVotes();
+        int sum = values.get(position).getUpVotes() - values.get(position).getDownVotes();
         if(sum < 0)
             foodRating.setText(Integer.toString(sum));
         else

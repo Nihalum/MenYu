@@ -104,10 +104,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateVotes(String restaurant, String food, boolean upvote, boolean downvote) {
         db = this.getReadableDatabase();
         int upvotes, downvotes, noOfReviews;
-        String id;
-        String query = "SELECT upvotes, downvotes, noOfReviews, _id FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
+        int id;
+        String query = "SELECT upvotes, downvotes, _id FROM " + TABLE_FOOD + " WHERE resName = " + "'" + restaurant + "' AND food = '" + food + "'";
         Cursor c = db.rawQuery(query, null);
         Log.d("lol", c.toString());
+        Log.d("lol", String.format("Place %d", c.getCount()));
         if (c.getCount() == 0) {
             return;
         }
@@ -116,9 +117,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 upvotes = c.getInt(0);
                 downvotes = c.getInt(1);
-                id = c.getString(2);
+                id = c.getInt(2);
             if(upvote == true) {
                 upvotes = upvotes + 1;
+                Log.d("lol", String.format("Vote %d %d", upvotes, id));
             }
             else if(downvote == true) {
                 downvotes = downvotes + 1;
@@ -128,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             val.put("upvotes", upvotes);
             val.put("downvotes", downvotes);
             db.update(TABLE_FOOD, val, "_id="+id, null);
-            db.close();
+            //db.close();
             } while (c.moveToNext());
         }
     }
